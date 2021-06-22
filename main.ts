@@ -550,6 +550,10 @@ namespace mbit_小车类 {
         Car_SpinLeft = 6,
         //% blockId="Car_SpinRight" block="原地右旋"
         Car_SpinRight = 7
+	//% blockId="Car_Left45" block="左转45度"
+        Car_Left = 8,
+        //% blockId="Car_Right45" block="右转45度"
+        Car_Right = 9,
     }
 
     function i2cwrite(addr: number, reg: number, value: number) {
