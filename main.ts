@@ -551,9 +551,9 @@ namespace mbit_小车类 {
         //% blockId="Car_SpinRight" block="原地右旋"
         Car_SpinRight = 7
 	//% blockId="Car_Left45" block="左转45度"
-        Car_Left = 8,
+        Car_Left45 = 8,
         //% blockId="Car_Right45" block="右转45度"
-        Car_Right = 9,
+        Car_Right45 = 9,
     }
 
     function i2cwrite(addr: number, reg: number, value: number) {
@@ -683,6 +683,30 @@ namespace mbit_小车类 {
         //pins.digitalWritePin(DigitalPin.P1, 0);
     }
 
+    function Car_left45(speed1: number, speed2: number) {
+
+        speed1 = speed1 * 16; // map 350 to 4096
+        speed2 = speed2 * 16;
+        if (speed1 >= 4096) {
+            speed1 = 4095
+        }
+        if (speed2 >= 4096) {
+            speed2 = 4095
+        }
+        
+        setPwm(12, 0, speed1);
+        setPwm(13, 0, 0);
+
+        setPwm(15, 0, speed2);
+        setPwm(14, 0, 0);
+
+        //pins.analogWritePin(AnalogPin.P0, speed);
+        //pins.digitalWritePin(DigitalPin.P8, 0);
+
+        //pins.digitalWritePin(DigitalPin.P16, 0);
+        //pins.digitalWritePin(DigitalPin.P1, 0);
+    }
+	
     function Car_right(speed1: number, speed2: number) {
 
         speed1 = speed1 * 16; // map 350 to 4096
@@ -705,7 +729,30 @@ namespace mbit_小车类 {
         //pins.digitalWritePin(DigitalPin.P16, 1);
        // pins.analogWritePin(AnalogPin.P1, 1023 - speed);
     }
+	
+    function Car_right45(speed1: number, speed2: number) {
 
+        speed1 = speed1 * 16; // map 350 to 4096
+        speed2 = speed2 * 16;
+        if (speed1 >= 4096) {
+            speed1 = 4095
+        }
+        if (speed2 >= 4096) {
+            speed2 = 4095
+        }
+        
+        setPwm(12, 0, speed1);
+        setPwm(13, 0, 0);
+
+        setPwm(15, 0, speed2);
+        setPwm(14, 0, 0);
+        //pins.digitalWritePin(DigitalPin.P0, 0);
+        //pins.digitalWritePin(DigitalPin.P8, 0);
+
+        //pins.digitalWritePin(DigitalPin.P16, 1);
+       // pins.analogWritePin(AnalogPin.P1, 1023 - speed);
+    }
+	
     function Car_stop() {
        
         setPwm(12, 0, 0);
@@ -1034,9 +1081,9 @@ namespace mbit_小车类 {
             case CarState.Car_Run: Car_run(255, 255); break;
             case CarState.Car_Back: Car_back(255, 255); break;
             case CarState.Car_Left: Car_left(0, 255); break;
-	    case CarState.Car_Left45: Car_left(0, 127); break;
+	    case CarState.Car_Left45: Car_left45(0, 127); break;
             case CarState.Car_Right: Car_right(255, 0); break;
-	    case CarState.Car_Right45: Car_right(127, 0); break;
+	    case CarState.Car_Right45: Car_right45(127, 0); break;
             case CarState.Car_Stop: Car_stop(); break;
             case CarState.Car_SpinLeft: Car_spinleft(255, 255); break;
             case CarState.Car_SpinRight: Car_spinright(255, 255); break;
